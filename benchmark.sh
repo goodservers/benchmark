@@ -96,7 +96,7 @@ function bench_quick {
     echo -n "Benching I/O speed ... "
     local io=$( ( dd if=/dev/zero of=$test_file bs=64k count=16k conv=fdatasync && rm -f $test_file ) 2>&1 | awk -F, '{io=$NF} END { print io}' )
 
-    ioSpeed=$(echo $io | sed "s/[^0-9]//g")
+    ioSpeed=$(echo $io | sed "s/[^0-9\.]//g")
     if [[ $ioSpeed =~ $isNumber ]] ; then
         jsonOutput="$jsonOutput, \"ioSpeed\":$ioSpeed"
     else
